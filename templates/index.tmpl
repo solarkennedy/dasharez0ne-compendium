@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>Welcome to dasharez0ne Compendium!</title>
+</head>
+<body>
+<h1>Welcome to dasharez0ne Compendium!</h1>
+<h3>A searchable index of all dasharez0ne image macros that anyone can edit.</h3>
+
+<hr>
+Example links:
+<ul>
+{{ range $key, $value := . }}
+   <li><a href="{{ $value }}">{{ $key }}</a></li>
+{{ end }}
+</ul>
+{{template "footer.tmpl"}}
+</body>
+</html>
