@@ -26,16 +26,13 @@ func performJSONRequest(r http.Handler, method, path string) *httptest.ResponseR
 func TestIndexJSON(t *testing.T) {
 	router := SetupRouter()
 	w := performJSONRequest(router, "GET", "/")
-	// Assert we encoded correctly,
-	// the request gives a 200
 	assert.Equal(t, http.StatusOK, w.Code)
-	// Convert the JSON response to a map
+
 	var response map[string]string
 	err := json.Unmarshal(w.Body.Bytes(), &response)
-	// Grab the value & whether or not it exists
-	value, exists := response["Page index (here)"]
-	// Make some assertions on the correctness of the response.
 	assert.Nil(t, err)
+
+	value, exists := response["Page index (here)"]
 	assert.True(t, exists)
 	assert.Equal(t, "/", value)
 }
@@ -43,11 +40,32 @@ func TestIndexJSON(t *testing.T) {
 func TestIndexHTML(t *testing.T) {
 	router := SetupRouter()
 	w := performRequest(router, "GET", "/")
-	// Assert we encoded correctly,
-	// the request gives a 200
 	assert.Equal(t, http.StatusOK, w.Code)
 
 	body := w.Body.String()
 	assert.Contains(t, body, "Welcome to dasharez0ne Compendium!")
 	assert.Contains(t, body, "Page index")
+}
+
+func TestMacroJSON(t *testing.T) {
+	router := SetupRouter()
+	w := performJSONRequest(router, "GET", "/macro/1463183460")
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response map[string]interface{}
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	assert.Nil(t, err)
+
+	value, exists := response["original_text"]
+	assert.True(t, exists)
+	assert.Equal(t, "FOLLOW ON FACebook https://t.co/68sSXQ7VBJ Da Motha F**CKin Share Z0ne...", value)
+}
+
+func TestMacroHTML(t *testing.T) {
+	router := SetupRouter()
+	w := performRequest(router, "GET", "/macro/1463183460")
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	body := w.Body.String()
+	assert.Contains(t, body, "I EAT ASS HOLES LIKE YOU")
 }
