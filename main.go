@@ -56,8 +56,8 @@ func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	md := NewMacroData()
 	r.Use(dataMiddleware(md))
-	r.LoadHTMLGlob("templates/*")
-	r.Static("/assets", "./assets")
+	r.LoadHTMLGlob("resources/templates/*")
+	r.Static("/assets", "resources/assets")
 
 	r.GET("/", index)
 	// r.GET("/search", search)

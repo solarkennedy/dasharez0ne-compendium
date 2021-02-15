@@ -18,7 +18,7 @@ func dataMiddleware(md MacroData) gin.HandlerFunc {
 }
 
 func loadData() []Macro {
-	jsonFile, err := os.Open("data.json")
+	jsonFile, err := os.Open("resources/data.json")
 	if err != nil {
 		panic(err)
 	}
