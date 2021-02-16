@@ -1,0 +1,43 @@
+definitions:
+  main.Macro:
+    properties:
+      caption:
+        type: string
+      edit_url:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      original_text:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      url:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Get a macro with all the associated data
+      parameters:
+      - description: Macro ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Macro'
+      summary: Shows a macro
+swagger: "2.0"

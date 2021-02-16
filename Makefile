@@ -18,3 +18,9 @@ run: build
 .PHONY: fmt
 fmt:
 	go fmt .
+
+test:
+	go test ./...
+
+swagger:
+	swag init

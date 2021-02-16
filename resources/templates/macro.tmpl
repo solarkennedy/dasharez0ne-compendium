@@ -12,7 +12,8 @@
 <li>Original URL: <a href={{.macro.Url}}>{{.macro.Url}}</a></li>
 <li>Tags: {{.macro.Tags}}</li>
 <li>Caption: <pre>{{.macro.Caption}}</pre></li>
+<li>Edit URL: <a href="{{.macro.EditURL}}">Edit Me!</a></li>
 </ul>
-{{template "footer.tmpl"}}
+{{template "footer.tmpl" .}}
 </body>
 </html>

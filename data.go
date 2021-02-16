@@ -17,6 +17,12 @@ func dataMiddleware(md MacroData) gin.HandlerFunc {
 	}
 }
 
+func annotateData(macros []Macro) {
+	for i := range macros {
+		macros[i].EditURL = fmt.Sprintf("https://github.com/solarkennedy/dasharez0ne-compendium/wiki/%d/_edit", macros[i].Id)
+	}
+}
+
 func loadData() []Macro {
 	jsonFile, err := os.Open("resources/data.json")
 	if err != nil {
@@ -29,6 +35,7 @@ func loadData() []Macro {
 	if err != nil {
 		panic(err)
 	}
+	annotateData(macros)
 	fmt.Printf("Loaded %d macros\n", len(macros))
 	return macros
 }
