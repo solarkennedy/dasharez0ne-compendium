@@ -46,8 +46,14 @@ func index(c *gin.Context) {
 	}
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
 	case gin.MIMEHTML:
-		data["full_path"] = FullURL(c)
-		c.HTML(200, "index.tmpl", data)
+		md, _ := c.MustGet("MacroData").(MacroData)
+		m := md.getRandomMacro()
+		content := gin.H{
+			"urls":      data,
+			"macro":     m,
+			"full_path": FullURL(c),
+		}
+		c.HTML(200, "index.tmpl", content)
 	case gin.MIMEJSON:
 		c.JSON(200, data)
 	}
