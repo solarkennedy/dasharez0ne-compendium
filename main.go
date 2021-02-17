@@ -38,9 +38,9 @@ func index(c *gin.Context) {
 	data := gin.H{
 		"Page index (here)":               "/",
 		"Specific macro (id: 1463183460)": "/macro/1463183460",
-		"API Docs":                        "/api/index.html",
-		"Tag list":                        "/tags",
-		"Tag Example":                     "/tag/acrostic",
+		"API Docs (swagger)":              "/api/index.html",
+		"Tag list (all tags)":             "/tags",
+		"Tag Example (acrostic)":          "/tag/acrostic",
 	}
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
 	case gin.MIMEHTML:
@@ -122,6 +122,7 @@ func tag(c *gin.Context) {
 	case gin.MIMEHTML:
 		tagHash := md.getExamplesOf(tagged)
 		data := gin.H{
+			"number":    len(tagHash),
 			"tag":       tagName,
 			"tagHash":   tagHash,
 			"full_path": FullURL(c),

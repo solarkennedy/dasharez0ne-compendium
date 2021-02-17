@@ -4,13 +4,12 @@
 </head>
 <body>
 <h1>Macro {{.id}}</h1>
-<img src="{{.macro.Image}}">
-<br>
+<img height="400" src="{{.macro.Image}}">
 <ul>
-<li><a href="TBD">{{.macro.Id}}</a></li>
 <li>Original Text: <pre>{{.macro.OriginalText}}</pre></li>
 <li>Original URL: <a href={{.macro.Url}}>{{.macro.Url}}</a></li>
-<li>Tags: {{.macro.Tags}}</li>
+<li>Tags: [{{range .macro.Tags}}
+<a href="/tag/{{.}}">{{.}}</a>  {{end}}]</li>
 <li>Caption: <pre>{{.macro.Caption}}</pre></li>
 <li>Edit URL: <a href="{{.macro.EditURL}}">Edit Me!</a></li>
 </ul>
