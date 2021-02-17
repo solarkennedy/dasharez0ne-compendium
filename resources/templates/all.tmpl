@@ -1,18 +1,18 @@
 <html>
 <head>
-<title>dasharez0ne Compendium - Tag: {{ .tag }}</title>
+<title>dasharez0ne Compendium - ALL MACROS</title>
 </head>
 <body>
 <h1>Tags</h1>
 
 <table>
   <tr>
-    <th>{{ .number }} Examples of {{ .tag }}</th>
+    <th>{{ .number }} Macros</th>
     <th>Caption</th>
     <th>Original Text</th>
     <th>Tags<th>
   </tr>
-  {{ range $macro := .tagged}}
+  {{ range $macro := .macros}}
   <tr>
     <td><a href="/macro/{{.Id}}"><img height="200" src="{{.Image}}"></a> </td>
     <td>{{.Caption}}</td>

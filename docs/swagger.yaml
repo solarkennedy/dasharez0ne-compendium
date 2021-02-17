@@ -90,13 +90,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Shows all macros with a particular tag
-      parameters:
-      - description: Tag name
-        in: path
-        name: tag
-        required: true
-        type: string
+      description: Shows all macros
       produces:
       - application/json
       responses:
@@ -104,7 +98,7 @@ paths:
           description: OK
           schema:
             type: object
-      summary: Shows all macros with a particular tag
+      summary: Shows all macros
   /tags:
     get:
       consumes:

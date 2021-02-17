@@ -104,23 +104,14 @@
         },
         "/tag/{tag}": {
             "get": {
-                "description": "Shows all macros with a particular tag",
+                "description": "Shows all macros",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Shows all macros with a particular tag",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Tag name",
-                        "name": "tag",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
+                "summary": "Shows all macros",
                 "responses": {
                     "200": {
                         "description": "OK",

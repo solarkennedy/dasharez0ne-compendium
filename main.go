@@ -43,6 +43,7 @@ func index(c *gin.Context) {
 		"Tag Example (acrostic)":          "/tag/acrostic",
 		"Random macro":                    "/random",
 		"Search Query (bearclaws)":        "/search/bearclaws",
+		"All Macros":                      "/all",
 	}
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
 	case gin.MIMEHTML:
@@ -178,6 +179,28 @@ func tag(c *gin.Context) {
 	}
 }
 
+// all godoc
+// @Summary Shows all macros
+// @Description Shows all macros
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} object
+// @Router /tag/{tag} [get]
+func all(c *gin.Context) {
+	md, _ := c.MustGet("MacroData").(MacroData)
+	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
+	case gin.MIMEHTML:
+		data := gin.H{
+			"number":    len(md.AllMacros),
+			"macros":    md.AllMacros,
+			"full_path": FullURL(c),
+		}
+		c.HTML(200, "all.tmpl", data)
+	case gin.MIMEJSON:
+		c.JSON(200, md.AllMacros)
+	}
+}
+
 // search godoc
 // @Summary Search macros
 // @Description Shows all macros by keyword. Searches captions, original_text, and tags
@@ -220,6 +243,7 @@ func SetupRouter() *gin.Engine {
 	r.GET("/tag/:tagName", tag)
 	r.GET("/search/:keyword", search)
 	r.GET("/random", random)
+	r.GET("/all", all)
 
 	url := ginSwagger.URL("https://" + canonicalURL + "/api/doc.json") // The url pointing to API definition
 	r.GET("/api/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
