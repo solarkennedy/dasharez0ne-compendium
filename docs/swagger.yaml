@@ -25,19 +25,19 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get a macro with all the associated data
+      description: Shows all macros with a particular tag
       parameters:
-      - description: Macro ID
+      - description: Tag name
         in: path
-        name: id
+        name: tag
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.Macro'
-      summary: Shows a macro
+            type: object
+      summary: Shows all macros with a particular tag
 swagger: "2.0"

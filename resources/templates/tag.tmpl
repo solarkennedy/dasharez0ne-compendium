@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>dasharez0ne Compendium - Tag: {{ .tag }}</title>
+</head>
+<body>
+<h1>Tags</h1>
+
+<table>
+  <tr>
+    <th>{{ .number }} Examples of {{ .tag }}</th>
+  </tr>
+  {{ range $key, $value := .tagHash}}
+  <tr>
+    <td><a href="/macro/{{$key}}"><img height="200" src="{{$value}}"></a> </td>
+  </tr>
+  {{ end}}
+</table>
+
+{{template "footer.tmpl" .}}
+</body>
+</html>

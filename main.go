@@ -39,6 +39,8 @@ func index(c *gin.Context) {
 		"Page index (here)":               "/",
 		"Specific macro (id: 1463183460)": "/macro/1463183460",
 		"API Docs":                        "/api/index.html",
+		"Tag list":                        "/tags",
+		"Tag Example":                     "/tag/acrostic",
 	}
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
 	case gin.MIMEHTML:
@@ -82,6 +84,54 @@ func macro(c *gin.Context) {
 	}
 }
 
+// tags godoc
+// @Summary Shows tags
+// @Description Show all tags
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} object
+// @Router / [get]
+func tags(c *gin.Context) {
+	md, _ := c.MustGet("MacroData").(MacroData)
+	tags := md.getTags()
+	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
+	case gin.MIMEHTML:
+		data := gin.H{
+			"tags":      tags,
+			"full_path": FullURL(c),
+		}
+		c.HTML(200, "tags.tmpl", data)
+	case gin.MIMEJSON:
+		c.JSON(200, tags)
+	}
+}
+
+// tag godoc
+// @Summary Shows all macros with a particular tag
+// @Description Shows all macros with a particular tag
+// @Accept  json
+// @Produce  json
+// @Param tag path string true "Tag name"
+// @Success 200 {object} object
+// @Router / [get]
+func tag(c *gin.Context) {
+	md, _ := c.MustGet("MacroData").(MacroData)
+	tagName := c.Param("tagName")
+	tagged := md.getTagged(tagName)
+	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
+	case gin.MIMEHTML:
+		tagHash := md.getExamplesOf(tagged)
+		data := gin.H{
+			"tag":       tagName,
+			"tagHash":   tagHash,
+			"full_path": FullURL(c),
+		}
+		c.HTML(200, "tag.tmpl", data)
+	case gin.MIMEJSON:
+		c.JSON(200, tagged)
+	}
+}
+
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	md := NewMacroData()
@@ -91,6 +141,8 @@ func SetupRouter() *gin.Engine {
 
 	r.GET("/", index)
 	r.GET("/macro/:id", macro)
+	r.GET("/tags", tags)
+	r.GET("/tag/:tagName", tag)
 
 	url := ginSwagger.URL("https://" + canonicalURL + "/api/doc.json") // The url pointing to API definition
 	r.GET("/api/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

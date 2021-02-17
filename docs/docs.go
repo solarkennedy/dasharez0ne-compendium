@@ -26,19 +26,19 @@ var doc = `{
     "paths": {
         "/": {
             "get": {
-                "description": "Get a macro with all the associated data",
+                "description": "Shows all macros with a particular tag",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Shows a macro",
+                "summary": "Shows all macros with a particular tag",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "Macro ID",
-                        "name": "id",
+                        "type": "string",
+                        "description": "Tag name",
+                        "name": "tag",
                         "in": "path",
                         "required": true
                     }
@@ -47,7 +47,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Macro"
+                            "type": "object"
                         }
                     }
                 }

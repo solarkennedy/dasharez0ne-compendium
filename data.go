@@ -61,3 +61,41 @@ func (md MacroData) getMacro(id int) (Macro, error) {
 	}
 	return Macro{}, fmt.Errorf("Not found")
 }
+
+func (md MacroData) getTags() map[string]int {
+	allTags := map[string]int{}
+	for _, m := range md.AllMacros {
+		for _, tag := range m.Tags {
+			allTags[tag]++
+		}
+	}
+	return allTags
+}
+
+func (md MacroData) getTagged(tagName string) []int {
+	t := []int{}
+	for _, m := range md.AllMacros {
+		if contains(m.Tags, tagName) {
+			t = append(t, m.Id)
+		}
+	}
+	return t
+}
+
+func (md MacroData) getExamplesOf(input []int) map[int]string {
+	t := map[int]string{}
+	for _, e := range input {
+		m, _ := md.getMacro(e)
+		t[e] = m.Image
+	}
+	return t
+}
+
+func contains(a []string, x string) bool {
+	for _, n := range a {
+		if x == n {
+			return true
+		}
+	}
+	return false
+}

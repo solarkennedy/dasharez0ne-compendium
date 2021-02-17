@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>dasharez0ne Compendium - All Tags</title>
+</head>
+<body>
+<h1>Tags</h1>
+
+<table>
+  <tr>
+    <th>Tag Name</th>
+    <th>Example</th>
+  </tr>
+  {{ range $key, $value := .tags}}
+  <tr>
+    <td><a href="tag/{{$key}}">{{$key}}</a> ({{$value}})</td>
+    <td><a href="macro/N"><img src="something"></a></td>
+  </tr>
+  {{ end}}
+</table>
+
+{{template "footer.tmpl" .}}
+</body>
+</html>
