@@ -3,13 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"strconv"
 
 	"io/ioutil"
 	"os"
 
 	"github.com/blevesearch/bleve/v2"
-	pb "github.com/cheggaaa/pb/v3"
 	"github.com/gin-gonic/gin"
 )
 
@@ -59,16 +59,12 @@ func NewMacroData() MacroData {
 	if err != nil {
 		panic(err)
 	}
-	bar := pb.StartNew(len(macros))
 	for _, m := range macros {
-		//data := fmt.Sprintf("%s %s %v", m.OriginalText, m.Caption, m.Tags)
-		err = index.Index(fmt.Sprintf("%d", m.Id), m)
+		err = index.Index(fmt.Sprintf("%d", m.Id), m.Caption)
 		if err != nil {
 			panic(err)
 		}
-		bar.Increment()
 	}
-	bar.Finish()
 	l, _ := index.DocCount()
 	fmt.Printf("Indexed %d documents\n", l)
 	return MacroData{
@@ -103,6 +99,12 @@ func (md MacroData) getTagged(tagName string) []Macro {
 		}
 	}
 	return t
+}
+
+func (md MacroData) GetRandomExample(tagName string) Macro {
+	options := md.getTagged(tagName)
+	i := rand.Intn(len(options))
+	return options[i]
 }
 
 func (md MacroData) search(keyword string) ([]Macro, error) {

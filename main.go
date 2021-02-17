@@ -85,6 +85,12 @@ func macro(c *gin.Context) {
 	}
 }
 
+type tagRow struct {
+	Tag     string
+	Count   int
+	Example Macro
+}
+
 // tags godoc
 // @Summary Shows tags
 // @Description Show all tags
@@ -97,8 +103,17 @@ func tags(c *gin.Context) {
 	tags := md.getTags()
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
 	case gin.MIMEHTML:
+		tagRows := []tagRow{}
+		for tag, count := range tags {
+			row := tagRow{
+				Tag:     tag,
+				Count:   count,
+				Example: md.GetRandomExample(tag),
+			}
+			tagRows = append(tagRows, row)
+		}
 		data := gin.H{
-			"tags":      tags,
+			"tag_rows":  tagRows,
 			"full_path": FullURL(c),
 		}
 		c.HTML(200, "tags.tmpl", data)

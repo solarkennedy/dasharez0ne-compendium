@@ -10,10 +10,10 @@
     <th>Tag Name</th>
     <th>Example</th>
   </tr>
-  {{ range $key, $value := .tags}}
+  {{ range $row := .tag_rows}}
   <tr>
-    <td><a href="tag/{{$key}}">{{$key}}</a> ({{$value}})</td>
-    <td><a href="macro/N"><img src="something"></a></td>
+    <td><a href="tag/{{.Tag}}">{{.Tag}}</a> ({{.Count}})</td>
+    <td><a href="macro/{{.Example.Id}}"><img src="{{.Example.Image}}" height="100"></a></td>
   </tr>
   {{ end}}
 </table>
