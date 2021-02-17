@@ -25,11 +25,12 @@ paths:
     get:
       consumes:
       - application/json
-      description: Shows all macros with a particular tag
+      description: Shows all macros by keyword. Searches captions, original_text,
+        and tags
       parameters:
-      - description: Tag name
+      - description: Keyword
         in: path
-        name: tag
+        name: keyword
         required: true
         type: string
       produces:
@@ -39,5 +40,5 @@ paths:
           description: OK
           schema:
             type: object
-      summary: Shows all macros with a particular tag
+      summary: Search macros
 swagger: "2.0"

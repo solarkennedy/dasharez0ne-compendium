@@ -6,19 +6,19 @@
     "paths": {
         "/": {
             "get": {
-                "description": "Shows all macros with a particular tag",
+                "description": "Shows all macros by keyword. Searches captions, original_text, and tags",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Shows all macros with a particular tag",
+                "summary": "Search macros",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Tag name",
-                        "name": "tag",
+                        "description": "Keyword",
+                        "name": "keyword",
                         "in": "path",
                         "required": true
                     }
