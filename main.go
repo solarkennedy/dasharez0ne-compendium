@@ -41,6 +41,7 @@ func index(c *gin.Context) {
 		"API Docs (swagger)":              "/api/index.html",
 		"Tag list (all tags)":             "/tags",
 		"Tag Example (acrostic)":          "/tag/acrostic",
+		"Random macro":                    "/random",
 		"Search Query (bearclaws)":        "/search/bearclaws",
 	}
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
@@ -59,7 +60,7 @@ func index(c *gin.Context) {
 // @Produce  json
 // @Param id path int true "Macro ID"
 // @Success 200 {object} Macro
-// @Router / [get]
+// @Router /macro/{id} [get]
 func macro(c *gin.Context) {
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)
@@ -85,6 +86,29 @@ func macro(c *gin.Context) {
 	}
 }
 
+// random godoc
+// @Summary Shows a random macro
+// @Description Get a random macro with all the associated data
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} Macro
+// @Router /random [get]
+func random(c *gin.Context) {
+	md, _ := c.MustGet("MacroData").(MacroData)
+	m := md.getRandomMacro()
+	data := gin.H{
+		"id":        m.Id,
+		"macro":     m,
+		"full_path": FullURL(c),
+	}
+	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
+	case gin.MIMEHTML:
+		c.HTML(200, "macro.tmpl", data)
+	case gin.MIMEJSON:
+		c.JSON(200, m)
+	}
+}
+
 type tagRow struct {
 	Tag     string
 	Count   int
@@ -97,7 +121,7 @@ type tagRow struct {
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} object
-// @Router / [get]
+// @Router /tags [get]
 func tags(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	tags := md.getTags()
@@ -129,7 +153,7 @@ func tags(c *gin.Context) {
 // @Produce  json
 // @Param tag path string true "Tag name"
 // @Success 200 {object} object
-// @Router / [get]
+// @Router /tag/{tag} [get]
 func tag(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	tagName := c.Param("tagName")
@@ -155,7 +179,7 @@ func tag(c *gin.Context) {
 // @Produce  json
 // @Param keyword path string true "Keyword"
 // @Success 200 {object} object
-// @Router / [get]
+// @Router /search/{keyword} [get]
 func search(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	keyword := c.Param("keyword")
@@ -189,6 +213,7 @@ func SetupRouter() *gin.Engine {
 	r.GET("/tags", tags)
 	r.GET("/tag/:tagName", tag)
 	r.GET("/search/:keyword", search)
+	r.GET("/random", random)
 
 	url := ginSwagger.URL("https://" + canonicalURL + "/api/doc.json") // The url pointing to API definition
 	r.GET("/api/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

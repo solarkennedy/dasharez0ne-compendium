@@ -26,6 +26,75 @@ var doc = `{
     "paths": {
         "/": {
             "get": {
+                "description": "Get an index of available urls",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Show an index",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/macro/{id}": {
+            "get": {
+                "description": "Get a macro with all the associated data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Shows a macro",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Macro ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Macro"
+                        }
+                    }
+                }
+            }
+        },
+        "/random": {
+            "get": {
+                "description": "Get a random macro with all the associated data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Shows a random macro",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Macro"
+                        }
+                    }
+                }
+            }
+        },
+        "/search/{keyword}": {
+            "get": {
                 "description": "Shows all macros by keyword. Searches captions, original_text, and tags",
                 "consumes": [
                     "application/json"
@@ -43,6 +112,55 @@ var doc = `{
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/tag/{tag}": {
+            "get": {
+                "description": "Shows all macros with a particular tag",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Shows all macros with a particular tag",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Tag name",
+                        "name": "tag",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/tags": {
+            "get": {
+                "description": "Show all tags",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Shows tags",
                 "responses": {
                     "200": {
                         "description": "OK",

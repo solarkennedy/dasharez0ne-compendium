@@ -107,6 +107,13 @@ func (md MacroData) GetRandomExample(tagName string) Macro {
 	return options[i]
 }
 
+func (md MacroData) getRandomMacro() Macro {
+	for _, m := range md.AllMacros {
+		return m
+	}
+	return md.AllMacros[1]
+}
+
 func (md MacroData) search(keyword string) ([]Macro, error) {
 	r := []Macro{}
 	query := bleve.NewMatchQuery(keyword)

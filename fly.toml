@@ -2,8 +2,14 @@
 
 app = "dasharez0ne-compendium"
 
+[env]
+  GIN_MODE = "release"
+
 [build]
   builtin = "go"
+
+[build.args]
+  BP_GO_BUILD_FLAGS = "-mod=vendor"
 
 kill_signal = "SIGINT"
 kill_timeout = 5

@@ -25,6 +25,51 @@ paths:
     get:
       consumes:
       - application/json
+      description: Get an index of available urls
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Show an index
+  /macro/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a macro with all the associated data
+      parameters:
+      - description: Macro ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Macro'
+      summary: Shows a macro
+  /random:
+    get:
+      consumes:
+      - application/json
+      description: Get a random macro with all the associated data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Macro'
+      summary: Shows a random macro
+  /search/{keyword}:
+    get:
+      consumes:
+      - application/json
       description: Shows all macros by keyword. Searches captions, original_text,
         and tags
       parameters:
@@ -41,4 +86,36 @@ paths:
           schema:
             type: object
       summary: Search macros
+  /tag/{tag}:
+    get:
+      consumes:
+      - application/json
+      description: Shows all macros with a particular tag
+      parameters:
+      - description: Tag name
+        in: path
+        name: tag
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Shows all macros with a particular tag
+  /tags:
+    get:
+      consumes:
+      - application/json
+      description: Show all tags
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Shows tags
 swagger: "2.0"
