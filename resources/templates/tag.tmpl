@@ -9,9 +9,9 @@
   <tr>
     <th>{{ .number }} Examples of {{ .tag }}</th>
   </tr>
-  {{ range $key, $value := .tagHash}}
+  {{ range $macro := .tagged}}
   <tr>
-    <td><a href="/macro/{{$key}}"><img height="200" src="{{$value}}"></a> </td>
+    <td><a href="/macro/{{.Id}}"><img height="200" src="{{.Image}}"></a> </td>
   </tr>
   {{ end}}
 </table>

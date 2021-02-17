@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/blevesearch/bleve/v2"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,7 +24,7 @@ func annotateData(macros []Macro) {
 	}
 }
 
-func loadData() []Macro {
+func loadData() map[int]Macro {
 	jsonFile, err := os.Open("resources/data.json")
 	if err != nil {
 		panic(err)
@@ -37,29 +38,46 @@ func loadData() []Macro {
 	}
 	annotateData(macros)
 	fmt.Printf("Loaded %d macros\n", len(macros))
-	return macros
+	m := map[int]Macro{}
+	for _, i := range macros {
+		m[i.Id] = i
+	}
+	return m
 }
 
 type MacroData struct {
-	AllMacros []Macro
+	AllMacros   map[int]Macro
+	SearchIndex bleve.Index
 }
 
 func NewMacroData() MacroData {
 	macros := loadData()
+	mapping := bleve.NewIndexMapping()
+	index, err := bleve.New("", mapping)
+	if err != nil {
+		panic(err)
+	}
+	for _, m := range macros {
+		data := fmt.Sprintf("%s %s %v", m.OriginalText, m.Caption, m.Tags)
+		err = index.Index(fmt.Sprintf("%d", m.Id), data)
+		if err != nil {
+			panic(err)
+		}
+	}
 	return MacroData{
-		AllMacros: macros,
+		AllMacros:   macros,
+		SearchIndex: index,
 	}
 }
 
 func (md MacroData) getMacro(id int) (Macro, error) {
 	fmt.Printf("Searching for id %d out of %d macros...\n", id, len(md.AllMacros))
 	// TODO: don't iterate
-	for _, m := range md.AllMacros {
-		if m.Id == id {
-			return m, nil
-		}
+	m, ok := md.AllMacros[id]
+	if !ok {
+		return Macro{}, fmt.Errorf("Not found")
 	}
-	return Macro{}, fmt.Errorf("Not found")
+	return m, nil
 }
 
 func (md MacroData) getTags() map[string]int {
@@ -72,21 +90,12 @@ func (md MacroData) getTags() map[string]int {
 	return allTags
 }
 
-func (md MacroData) getTagged(tagName string) []int {
-	t := []int{}
+func (md MacroData) getTagged(tagName string) []Macro {
+	t := []Macro{}
 	for _, m := range md.AllMacros {
 		if contains(m.Tags, tagName) {
-			t = append(t, m.Id)
+			t = append(t, m)
 		}
-	}
-	return t
-}
-
-func (md MacroData) getExamplesOf(input []int) map[int]string {
-	t := map[int]string{}
-	for _, e := range input {
-		m, _ := md.getMacro(e)
-		t[e] = m.Image
 	}
 	return t
 }

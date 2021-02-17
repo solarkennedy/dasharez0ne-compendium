@@ -120,11 +120,10 @@ func tag(c *gin.Context) {
 	tagged := md.getTagged(tagName)
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
 	case gin.MIMEHTML:
-		tagHash := md.getExamplesOf(tagged)
 		data := gin.H{
-			"number":    len(tagHash),
+			"number":    len(tagged),
 			"tag":       tagName,
-			"tagHash":   tagHash,
+			"tagged":    tagged,
 			"full_path": FullURL(c),
 		}
 		c.HTML(200, "tag.tmpl", data)
