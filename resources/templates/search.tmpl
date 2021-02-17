@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>dasharez0ne Compendium - Search: {{ .keyword }}</title>
+</head>
+<body>
+<h1>Tags</h1>
+
+<table>
+  <tr>
+    <th>{{ .number }} Results for {{ .keyword }}</th>
+  </tr>
+  {{ range $macro := .results}}
+  <tr>
+    <td><a href="/macro/{{.Id}}"><img height="200" src="{{.Image}}"></a> </td>
+  </tr>
+  {{ end}}
+</table>
+
+{{template "footer.tmpl" .}}
+</body>
+</html>

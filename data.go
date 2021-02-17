@@ -3,11 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	"io/ioutil"
 	"os"
 
 	"github.com/blevesearch/bleve/v2"
+	pb "github.com/cheggaaa/pb/v3"
 	"github.com/gin-gonic/gin"
 )
 
@@ -57,13 +59,18 @@ func NewMacroData() MacroData {
 	if err != nil {
 		panic(err)
 	}
+	bar := pb.StartNew(len(macros))
 	for _, m := range macros {
-		data := fmt.Sprintf("%s %s %v", m.OriginalText, m.Caption, m.Tags)
-		err = index.Index(fmt.Sprintf("%d", m.Id), data)
+		//data := fmt.Sprintf("%s %s %v", m.OriginalText, m.Caption, m.Tags)
+		err = index.Index(fmt.Sprintf("%d", m.Id), m)
 		if err != nil {
 			panic(err)
 		}
+		bar.Increment()
 	}
+	bar.Finish()
+	l, _ := index.DocCount()
+	fmt.Printf("Indexed %d documents\n", l)
 	return MacroData{
 		AllMacros:   macros,
 		SearchIndex: index,
@@ -71,8 +78,6 @@ func NewMacroData() MacroData {
 }
 
 func (md MacroData) getMacro(id int) (Macro, error) {
-	fmt.Printf("Searching for id %d out of %d macros...\n", id, len(md.AllMacros))
-	// TODO: don't iterate
 	m, ok := md.AllMacros[id]
 	if !ok {
 		return Macro{}, fmt.Errorf("Not found")
@@ -98,6 +103,22 @@ func (md MacroData) getTagged(tagName string) []Macro {
 		}
 	}
 	return t
+}
+
+func (md MacroData) search(keyword string) ([]Macro, error) {
+	r := []Macro{}
+	query := bleve.NewMatchQuery(keyword)
+	search := bleve.NewSearchRequest(query)
+	search.Highlight = bleve.NewHighlight()
+	searchResults, err := md.SearchIndex.Search(search)
+	if err != nil {
+		return nil, err
+	}
+	for _, hit := range searchResults.Hits {
+		idInt, _ := strconv.Atoi(hit.ID)
+		r = append(r, md.AllMacros[idInt])
+	}
+	return r, nil
 }
 
 func contains(a []string, x string) bool {
