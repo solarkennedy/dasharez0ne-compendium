@@ -185,7 +185,7 @@ func tag(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} object
-// @Router /tag/{tag} [get]
+// @Router /all [get]
 func all(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
