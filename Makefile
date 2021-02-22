@@ -6,7 +6,7 @@ PKGS     = $(or $(PKG),$(shell env GO111MODULE=on $(GO) list ./...))
 BIN = $(CURDIR)/bin
 $(BIN):
 	@mkdir -p $@
-build: fmt | $(BIN)
+build: fmt | $(BIN) swagger
 	go build \
 	    -tags release \
 	    -ldflags '-X dasharez0ne-compendium/cmd.Version=$(VERSION)' \
@@ -24,3 +24,6 @@ test:
 
 swagger:
 	swag init
+
+deploy:
+	fly deploy

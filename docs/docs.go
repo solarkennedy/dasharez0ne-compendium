@@ -44,6 +44,26 @@ var doc = `{
                 }
             }
         },
+        "/all": {
+            "get": {
+                "description": "Shows all macros",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Shows all macros",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/macro/{id}": {
             "get": {
                 "description": "Get a macro with all the associated data",
@@ -124,14 +144,23 @@ var doc = `{
         },
         "/tag/{tag}": {
             "get": {
-                "description": "Shows all macros",
+                "description": "Shows all macros with a particular tag",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Shows all macros",
+                "summary": "Shows all macros with a particular tag",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Tag name",
+                        "name": "tag",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

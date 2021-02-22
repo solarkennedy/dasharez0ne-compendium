@@ -34,6 +34,19 @@ paths:
           schema:
             type: object
       summary: Show an index
+  /all:
+    get:
+      consumes:
+      - application/json
+      description: Shows all macros
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Shows all macros
   /macro/{id}:
     get:
       consumes:
@@ -90,7 +103,13 @@ paths:
     get:
       consumes:
       - application/json
-      description: Shows all macros
+      description: Shows all macros with a particular tag
+      parameters:
+      - description: Tag name
+        in: path
+        name: tag
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -98,7 +117,7 @@ paths:
           description: OK
           schema:
             type: object
-      summary: Shows all macros
+      summary: Shows all macros with a particular tag
   /tags:
     get:
       consumes:
