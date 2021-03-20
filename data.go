@@ -43,7 +43,7 @@ func loadData() map[int]Macro {
 	m := map[int]Macro{}
 	for _, i := range macros {
 		tags := i.Tags
-		if !(contains(tags, "dupe") || contains(tags, "merch") || contains(tags, "misc")) {
+		if !(contains(tags, "dupe") || contains(tags, "merch") || contains(tags, "misc") || contains(tags, "donation") || contains(tags, "retweet")) {
 			m[i.Id] = i
 		}
 	}

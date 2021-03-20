@@ -10,12 +10,15 @@
 <h1>Macro {{.id}}</h1>
 <img height="400" src="{{.macro.Image}}">
 <ul>
-<li>Original Text: <pre>{{.macro.OriginalText}}</pre></li>
-<li>Original URL: <a href={{.macro.Url}}>{{.macro.Url}}</a></li>
-<li>Tags: [{{range .macro.Tags}}
-<a href="/tag/{{.}}">{{.}}</a>  {{end}}]</li>
-<li>Caption: <pre>{{.macro.Caption}}</pre></li>
-<li>Edit URL: <a href="{{.macro.EditURL}}">Edit Me!</a></li>
+  <li>Original Text: <pre>{{.macro.OriginalText}}</pre></li>
+  <li>Original URL: <a href={{.macro.Url}}>{{.macro.Url}}</a></li>
+  <li>Tags: [{{range .macro.Tags}}<a href="/tag/{{.}}">{{.}}</a>  {{end}}]</li>
+  <li>Caption: <pre>{{.macro.Caption}}</pre></li>
+  {{ if .macro.Commentary }}
+  <li>Commentary: {{.macro.Commentary}}</li>
+  {{ end }}
+  <li>Edit URL: <a href="{{.macro.EditURL}}">Edit Me!</a></li>
+  <li>Permalink: <a href="macro/{{ .macro.Id}}">Link</a></li>
 </ul>
 {{template "footer.tmpl" .}}
 </body>

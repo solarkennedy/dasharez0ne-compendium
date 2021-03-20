@@ -198,6 +198,9 @@ var doc = `{
                 "caption": {
                     "type": "string"
                 },
+                "commentary": {
+                    "type": "string"
+                },
                 "edit_url": {
                     "type": "string"
                 },

@@ -22,6 +22,7 @@ type Macro struct {
 	Image        string   `json:"image"`
 	Caption      string   `json:"caption"`
 	EditURL      string   `json:"edit_url"`
+	Commentary   string   `json:"commentary"`
 }
 
 func FullURL(c *gin.Context) string {
