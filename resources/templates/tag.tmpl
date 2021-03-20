@@ -1,6 +1,9 @@
 <html>
 <head>
 <title>dasharez0ne Compendium - Tag: {{ .tag }}</title>
+<meta property="og:type" content="website">
+<meta property="og:description" content="Every dasharez0ne macro related to {{ .tag }}">
+<meta property="og:image" content="{{if .tagged}}{{(index .tagged 0).Image}}{{end}}">
 </head>
 <body>
 <h1>Tags</h1>

@@ -1,6 +1,10 @@
 <html>
 <head>
 <title>dasharez0ne Compendium - Search: {{ .keyword }}</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="dasharez0ne Compendium - Search: {{ .keyword }}">
+<meta property="og:description" content="Every dasharez0ne macro related to {{ .keyword }}">
+<meta property="og:image" content="{{if .results}}{{(index .results 0).Image}}{{end}}">
 </head>
 <body>
 <h1>Tags</h1>
