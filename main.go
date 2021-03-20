@@ -77,9 +77,10 @@ func macro(c *gin.Context) {
 	}
 
 	md, _ := c.MustGet("MacroData").(MacroData)
-	m, err := md.getMacro(idInt)
-	if err != nil {
-		panic(err)
+	m, ok := md.getMacro(idInt)
+	if !ok {
+		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Macro not found"})
+		return
 	}
 	data := gin.H{
 		"id":        m.Id,

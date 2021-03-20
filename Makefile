@@ -27,3 +27,6 @@ swagger:
 
 deploy:
 	fly deploy
+
+clean:
+	rm bin/*

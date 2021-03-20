@@ -40,11 +40,15 @@ func loadData() map[int]Macro {
 		panic(err)
 	}
 	annotateData(macros)
-	fmt.Printf("Loaded %d macros\n", len(macros))
 	m := map[int]Macro{}
 	for _, i := range macros {
-		m[i.Id] = i
+		tags := i.Tags
+		if !(contains(tags, "dupe") || contains(tags, "merch") || contains(tags, "misc")) {
+			m[i.Id] = i
+		}
 	}
+	fmt.Printf("Loaded %d macros\n", len(m))
+
 	return m
 }
 
@@ -74,12 +78,9 @@ func NewMacroData() MacroData {
 	}
 }
 
-func (md MacroData) getMacro(id int) (Macro, error) {
+func (md MacroData) getMacro(id int) (Macro, bool) {
 	m, ok := md.AllMacros[id]
-	if !ok {
-		return Macro{}, fmt.Errorf("Not found")
-	}
-	return m, nil
+	return m, ok
 }
 
 func (md MacroData) getTags() map[string]int {
