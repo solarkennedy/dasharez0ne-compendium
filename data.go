@@ -48,7 +48,6 @@ func loadData() map[int]Macro {
 		}
 	}
 	fmt.Printf("Loaded %d macros\n", len(m))
-
 	return m
 }
 
@@ -65,7 +64,7 @@ func NewMacroData() MacroData {
 		panic(err)
 	}
 	for _, m := range macros {
-		err = index.Index(fmt.Sprintf("%d", m.Id), m.Caption)
+		err = index.Index(fmt.Sprintf("%d", m.Id), m)
 		if err != nil {
 			panic(err)
 		}
@@ -121,10 +120,9 @@ func (md MacroData) getRandomMacro() Macro {
 
 func (md MacroData) search(keyword string) ([]Macro, error) {
 	r := []Macro{}
-	query := bleve.NewMatchQuery(keyword)
-	search := bleve.NewSearchRequest(query)
-	search.Highlight = bleve.NewHighlight()
-	searchResults, err := md.SearchIndex.Search(search)
+	query := bleve.NewFuzzyQuery(keyword)
+	searchRequest := bleve.NewSearchRequest(query)
+	searchResults, err := md.SearchIndex.Search(searchRequest)
 	if err != nil {
 		return nil, err
 	}
