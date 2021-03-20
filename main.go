@@ -1,6 +1,7 @@
 package main
 
 import (
+	"sort"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -135,7 +136,13 @@ func tags(c *gin.Context) {
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
 	case gin.MIMEHTML:
 		tagRows := []tagRow{}
-		for tag, count := range tags {
+		keys := make([]string, 0, len(tags))
+		for k := range tags {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		for _, tag := range keys {
+			count := tags[tag]
 			row := tagRow{
 				Tag:     tag,
 				Count:   count,

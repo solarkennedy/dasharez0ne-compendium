@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"math/rand"
+	"sort"
 	"strconv"
 
 	"io/ioutil"
@@ -98,6 +99,9 @@ func (md MacroData) getTagged(tagName string) []Macro {
 			t = append(t, m)
 		}
 	}
+	sort.Slice(t, func(i, j int) bool {
+		return t[i].Id < t[j].Id
+	})
 	return t
 }
 
