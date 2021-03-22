@@ -36,3 +36,6 @@ kill_timeout = 5
     port = "8080"
     restart_limit = 5
     timeout = "2s"
+
+[experimental]
+  private_network=true
