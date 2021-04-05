@@ -64,7 +64,7 @@ func NewMacroData() MacroData {
 		panic(err)
 	}
 	for _, m := range macros {
-		err = index.Index(fmt.Sprintf("%d", m.Id), m)
+		err = index.Index(fmt.Sprintf("%d", m.Id), m.Caption)
 		if err != nil {
 			panic(err)
 		}
