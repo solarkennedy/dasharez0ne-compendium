@@ -43,6 +43,26 @@ var doc = `{
                 }
             }
         },
+        "/about": {
+            "get": {
+                "description": "About this site",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "About this site",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/all": {
             "get": {
                 "description": "Shows all macros",

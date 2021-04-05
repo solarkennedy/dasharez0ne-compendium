@@ -36,6 +36,19 @@ paths:
           schema:
             type: object
       summary: Show an index
+  /about:
+    get:
+      consumes:
+      - application/json
+      description: About this site
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: About this site
   /all:
     get:
       consumes:

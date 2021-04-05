@@ -39,6 +39,7 @@ func FullURL(c *gin.Context) string {
 func index(c *gin.Context) {
 	data := gin.H{
 		"Page index (here)":               "/",
+		"About This Site":                 "/about",
 		"Specific macro (id: 1463183460)": "/macro/1463183460",
 		"API Docs (swagger)":              "/api/index.html",
 		"Tag list (all tags)":             "/tags",
@@ -240,6 +241,27 @@ func search(c *gin.Context) {
 	}
 }
 
+// about godoc
+// @Summary About this site
+// @Description About this site
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} object
+// @Router /about [get]
+func about(c *gin.Context) {
+	md, _ := c.MustGet("MacroData").(MacroData)
+	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
+	case gin.MIMEHTML:
+		data := gin.H{
+			"number":    len(md.AllMacros),
+			"full_path": FullURL(c),
+		}
+		c.HTML(200, "about.tmpl", data)
+	case gin.MIMEJSON:
+		c.JSON(200, nil)
+	}
+}
+
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	md := NewMacroData()
@@ -248,6 +270,7 @@ func SetupRouter() *gin.Engine {
 	r.Static("/assets", "resources/assets")
 
 	r.GET("/", index)
+	r.GET("/about", about)
 	r.GET("/macro/:id", macro)
 	r.GET("/tags", tags)
 	r.GET("/tag/:tagName", tag)
