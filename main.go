@@ -124,7 +124,7 @@ func random(c *gin.Context) {
 type tagRow struct {
 	Tag     string
 	Count   int
-	Example Macro
+	Example *Macro
 }
 
 // tags godoc

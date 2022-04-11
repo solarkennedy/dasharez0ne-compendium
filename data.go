@@ -21,26 +21,26 @@ func dataMiddleware(md MacroData) gin.HandlerFunc {
 	}
 }
 
-func annotateData(macros []Macro) {
+func annotateData(macros []*Macro) {
 	for i := range macros {
 		macros[i].EditURL = fmt.Sprintf("https://github.com/solarkennedy/dasharez0ne-compendium/wiki/%d/_edit", macros[i].Id)
 	}
 }
 
-func loadData() map[int]Macro {
+func loadData() map[int]*Macro {
 	jsonFile, err := os.Open("resources/data.json")
 	if err != nil {
 		panic(err)
 	}
 	defer jsonFile.Close()
-	macros := []Macro{}
+	macros := []*Macro{}
 	b, _ := ioutil.ReadAll(jsonFile)
 	err = json.Unmarshal(b, &macros)
 	if err != nil {
 		panic(err)
 	}
 	annotateData(macros)
-	m := map[int]Macro{}
+	m := map[int]*Macro{}
 	for _, i := range macros {
 		tags := i.Tags
 		if !(contains(tags, "dupe") || contains(tags, "merch") || contains(tags, "misc") || contains(tags, "donation") || contains(tags, "retweet")) {
@@ -52,7 +52,7 @@ func loadData() map[int]Macro {
 }
 
 type MacroData struct {
-	AllMacros   map[int]Macro
+	AllMacros   map[int]*Macro
 	SearchIndex bleve.Index
 }
 
@@ -73,11 +73,11 @@ func NewMacroData() MacroData {
 	fmt.Printf("Indexed %d documents\n", l)
 	return MacroData{
 		AllMacros:   macros,
-		SearchIndex: index,
+		SearchIndex: nil,
 	}
 }
 
-func (md MacroData) getMacro(id int) (Macro, bool) {
+func (md MacroData) getMacro(id int) (*Macro, bool) {
 	m, ok := md.AllMacros[id]
 	return m, ok
 }
@@ -92,8 +92,8 @@ func (md MacroData) getTags() map[string]int {
 	return allTags
 }
 
-func (md MacroData) getTagged(tagName string) []Macro {
-	t := []Macro{}
+func (md MacroData) getTagged(tagName string) []*Macro {
+	t := []*Macro{}
 	for _, m := range md.AllMacros {
 		if contains(m.Tags, tagName) {
 			t = append(t, m)
@@ -105,21 +105,21 @@ func (md MacroData) getTagged(tagName string) []Macro {
 	return t
 }
 
-func (md MacroData) GetRandomExample(tagName string) Macro {
+func (md MacroData) GetRandomExample(tagName string) *Macro {
 	options := md.getTagged(tagName)
 	i := rand.Intn(len(options))
 	return options[i]
 }
 
-func (md MacroData) getRandomMacro() Macro {
+func (md MacroData) getRandomMacro() *Macro {
 	for _, m := range md.AllMacros {
 		return m
 	}
 	return md.AllMacros[1]
 }
 
-func (md MacroData) search(keyword string) ([]Macro, error) {
-	r := []Macro{}
+func (md MacroData) search(keyword string) ([]*Macro, error) {
+	r := []*Macro{}
 	query := bleve.NewFuzzyQuery(keyword)
 	searchRequest := bleve.NewSearchRequest(query)
 	searchResults, err := md.SearchIndex.Search(searchRequest)
