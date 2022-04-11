@@ -58,19 +58,19 @@ type MacroData struct {
 
 func NewMacroData() MacroData {
 	macros := loadData()
-	mapping := bleve.NewIndexMapping()
-	index, err := bleve.New("", mapping)
-	if err != nil {
-		panic(err)
-	}
-	for _, m := range macros {
-		err = index.Index(fmt.Sprintf("%d", m.Id), m.Caption)
-		if err != nil {
-			panic(err)
-		}
-	}
-	l, _ := index.DocCount()
-	fmt.Printf("Indexed %d documents\n", l)
+	// mapping := bleve.NewIndexMapping()
+	// index, err := bleve.New("", mapping)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// for _, m := range macros {
+	// 	err = index.Index(fmt.Sprintf("%d", m.Id), m.Caption)
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+	// }
+	// l, _ := index.DocCount()
+	// fmt.Printf("Indexed %d documents\n", l)
 	return MacroData{
 		AllMacros:   macros,
 		SearchIndex: nil,
