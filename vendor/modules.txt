@@ -6,12 +6,6 @@ github.com/PuerkitoBio/purell
 github.com/PuerkitoBio/urlesc
 # github.com/RoaringBitmap/roaring v0.4.23
 github.com/RoaringBitmap/roaring
-# github.com/VividCortex/ewma v1.1.1
-github.com/VividCortex/ewma
-# github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
-## explicit
-github.com/alecthomas/template
-github.com/alecthomas/template/parse
 # github.com/blevesearch/bleve/v2 v2.0.2
 ## explicit
 github.com/blevesearch/bleve/v2
@@ -76,14 +70,8 @@ github.com/blevesearch/zapx/v13
 github.com/blevesearch/zapx/v14
 # github.com/blevesearch/zapx/v15 v15.2.0
 github.com/blevesearch/zapx/v15
-# github.com/cheggaaa/pb/v3 v3.0.6
-## explicit
-github.com/cheggaaa/pb/v3
-github.com/cheggaaa/pb/v3/termutil
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
-# github.com/fatih/color v1.7.0
-github.com/fatih/color
 # github.com/gin-contrib/sse v0.1.0
 github.com/gin-contrib/sse
 # github.com/gin-gonic/gin v1.6.3
@@ -130,12 +118,8 @@ github.com/leodido/go-urn
 github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
-# github.com/mattn/go-colorable v0.1.2
-github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.12
 github.com/mattn/go-isatty
-# github.com/mattn/go-runewidth v0.0.7
-github.com/mattn/go-runewidth
 # github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.1
