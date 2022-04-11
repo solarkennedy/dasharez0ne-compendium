@@ -7,18 +7,12 @@
 <meta property="og:image" content="{{if .results}}{{(index .results 0).Image}}{{end}}">
 </head>
 <body>
-<h1>Tags</h1>
+<h1>Search: {{ .keyword }}</h1>
 
-<table>
-  <tr>
-    <th>{{ .number }} Results for {{ .keyword }}</th>
-  </tr>
-  {{ range $macro := .results}}
-  <tr>
-    <td><a href="/macro/{{.Id}}"><img height="200" src="{{.Image}}"></a> </td>
-  </tr>
-  {{ end}}
-</table>
+<p>Please use the search box below and type in "{{ .keyword }}":
+
+<script async src="https://cse.google.com/cse.js?cx=3b23bb97d2a55797a"></script>
+<div class="gcse-search"></div>
 
 {{template "footer.tmpl" .}}
 </body>

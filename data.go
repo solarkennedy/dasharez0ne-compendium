@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"math/rand"
 	"sort"
-	"strconv"
 
 	"io/ioutil"
 	"os"
@@ -120,17 +119,18 @@ func (md MacroData) getRandomMacro() *Macro {
 
 func (md MacroData) search(keyword string) ([]*Macro, error) {
 	r := []*Macro{}
-	query := bleve.NewFuzzyQuery(keyword)
-	searchRequest := bleve.NewSearchRequest(query)
-	searchResults, err := md.SearchIndex.Search(searchRequest)
-	if err != nil {
-		return nil, err
-	}
-	for _, hit := range searchResults.Hits {
-		idInt, _ := strconv.Atoi(hit.ID)
-		r = append(r, md.AllMacros[idInt])
-	}
 	return r, nil
+	// query := bleve.NewFuzzyQuery(keyword)
+	// searchRequest := bleve.NewSearchRequest(query)
+	// searchResults, err := md.SearchIndex.Search(searchRequest)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// for _, hit := range searchResults.Hits {
+	// 	idInt, _ := strconv.Atoi(hit.ID)
+	// 	r = append(r, md.AllMacros[idInt])
+	// }
+	// return r, nil
 }
 
 func contains(a []string, x string) bool {
