@@ -17,6 +17,12 @@
   {{ if .macro.Commentary }}
   <li>Commentary: {{.macro.Commentary}}</li>
   {{ end }}
+  {{ if .macro.DupeOf }}
+  <li>Dupe Of: <a href="/macro/{{.macro.DupeOf}}">{{.macro.DupeOf}}</a></li>
+  {{ end }}
+  {{ if .macro.Dupes }}
+  <li>Dupes: [{{range .macro.Dupes}}<a href="/macro/{{.}}">{{.}}</a>  {{end}}]</li>
+  {{ end }}
   <li>Edit URL: <a href="{{.macro.EditURL}}">Edit Me!</a></li>
   <li>Permalink: <a href="macro/{{ .macro.Id}}">Link</a></li>
 </ul>

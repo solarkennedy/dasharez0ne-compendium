@@ -42,8 +42,16 @@ func loadData() map[int]*Macro {
 	m := map[int]*Macro{}
 	for _, i := range macros {
 		tags := i.Tags
-		if !(contains(tags, "dupe") || contains(tags, "merch") || contains(tags, "misc") || contains(tags, "donation") || contains(tags, "retweet")) {
+		if !(contains(tags, "merch") || contains(tags, "misc") || contains(tags, "donation") || contains(tags, "retweet")) {
 			m[i.Id] = i
+		}
+	}
+	for k, v := range m {
+		if v.DupeOf != 0 {
+			orig := v.DupeOf
+			if _, ok := m[orig]; ok {
+				m[orig].Dupes = append(m[orig].Dupes, k)
+			}
 		}
 	}
 	fmt.Printf("Loaded %d macros\n", len(m))

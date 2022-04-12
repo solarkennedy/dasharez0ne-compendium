@@ -19,10 +19,12 @@ type Macro struct {
 	OriginalText string   `json:"original_text"`
 	Url          string   `json:"url"`
 	Tags         []string `json:"tags"`
-	Image        string   `json:"image"`
-	Caption      string   `json:"caption"`
-	EditURL      string   `json:"edit_url"`
-	Commentary   string   `json:"commentary"`
+	DupeOf       int      `json:"dupe_of"`
+	Dupes        []int
+	Image        string `json:"image"`
+	Caption      string `json:"caption"`
+	EditURL      string `json:"edit_url"`
+	Commentary   string `json:"commentary"`
 }
 
 func FullURL(c *gin.Context) string {
