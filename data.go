@@ -125,6 +125,15 @@ func (md MacroData) getRandomMacro() *Macro {
 	return md.AllMacros[1]
 }
 
+func (md MacroData) getLatestMacro() *Macro {
+	keys := make([]int, 0, len(md.AllMacros))
+	for k := range md.AllMacros {
+		keys = append(keys, k)
+	}
+	sort.Ints(keys)
+	return md.AllMacros[keys[len(keys)-1]]
+}
+
 func (md MacroData) search(keyword string) ([]*Macro, error) {
 	r := []*Macro{}
 	return r, nil

@@ -16,6 +16,11 @@ Latest Macro:<br>
   <img src="{{.macro.Image}}" height="400" alt="{{.macro.OriginalText}}">
 </a>
 <br>
+And a random Macro:<br>
+<a href="macro/{{.random_macro.Id}}">
+  <img src="{{.random_macro.Image}}" height="400" alt="{{.random_macro.OriginalText}}">
+</a>
+<br>
 Example links:
 <ul>
 {{ range $key, $value := .urls }}

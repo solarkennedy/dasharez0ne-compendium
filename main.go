@@ -53,12 +53,12 @@ func index(c *gin.Context) {
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
 	case gin.MIMEHTML:
 		md, _ := c.MustGet("MacroData").(MacroData)
-		m := md.getRandomMacro()
 		content := gin.H{
-			"urls":        data,
-			"macro":       m,
-			"total_count": len(md.AllMacros),
-			"full_path":   FullURL(c),
+			"urls":         data,
+			"macro":        md.getLatestMacro(),
+			"random_macro": md.getRandomMacro(),
+			"total_count":  len(md.AllMacros),
+			"full_path":    FullURL(c),
 		}
 		c.HTML(200, "index.tmpl", content)
 	case gin.MIMEJSON:
