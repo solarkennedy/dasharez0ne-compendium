@@ -5,6 +5,12 @@ definitions:
         type: string
       commentary:
         type: string
+      dupe_of:
+        type: integer
+      dupes:
+        items:
+          type: integer
+        type: array
       edit_url:
         type: string
       id:

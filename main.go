@@ -32,12 +32,12 @@ func FullURL(c *gin.Context) string {
 }
 
 // Index godoc
-// @Summary Show an index
-// @Description Get an index of available urls
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} object
-// @Router / [get]
+// @Summary      Show an index
+// @Description  Get an index of available urls
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  object
+// @Router       / [get]
 func index(c *gin.Context) {
 	data := gin.H{
 		"Page index (here)":               "/",
@@ -67,13 +67,13 @@ func index(c *gin.Context) {
 }
 
 // macro godoc
-// @Summary Shows a macro
-// @Description Get a macro with all the associated data
-// @Accept  json
-// @Produce  json
-// @Param id path int true "Macro ID"
-// @Success 200 {object} Macro
-// @Router /macro/{id} [get]
+// @Summary      Shows a macro
+// @Description  Get a macro with all the associated data
+// @Accept       json
+// @Produce      json
+// @Param        id   path      int  true  "Macro ID"
+// @Success      200  {object}  Macro
+// @Router       /macro/{id} [get]
 func macro(c *gin.Context) {
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)
@@ -101,12 +101,12 @@ func macro(c *gin.Context) {
 }
 
 // random godoc
-// @Summary Shows a random macro
-// @Description Get a random macro with all the associated data
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} Macro
-// @Router /random [get]
+// @Summary      Shows a random macro
+// @Description  Get a random macro with all the associated data
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  Macro
+// @Router       /random [get]
 func random(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	m := md.getRandomMacro()
@@ -130,12 +130,12 @@ type tagRow struct {
 }
 
 // tags godoc
-// @Summary Shows tags
-// @Description Show all tags
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} object
-// @Router /tags [get]
+// @Summary      Shows tags
+// @Description  Show all tags
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  object
+// @Router       /tags [get]
 func tags(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	tags := md.getTags()
@@ -167,13 +167,13 @@ func tags(c *gin.Context) {
 }
 
 // tag godoc
-// @Summary Shows all macros with a particular tag
-// @Description Shows all macros with a particular tag
-// @Accept  json
-// @Produce  json
-// @Param tag path string true "Tag name"
-// @Success 200 {object} object
-// @Router /tag/{tag} [get]
+// @Summary      Shows all macros with a particular tag
+// @Description  Shows all macros with a particular tag
+// @Accept       json
+// @Produce      json
+// @Param        tag  path      string  true  "Tag name"
+// @Success      200  {object}  object
+// @Router       /tag/{tag} [get]
 func tag(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	tagName := c.Param("tagName")
@@ -193,12 +193,12 @@ func tag(c *gin.Context) {
 }
 
 // all godoc
-// @Summary Shows all macros
-// @Description Shows all macros
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} object
-// @Router /all [get]
+// @Summary      Shows all macros
+// @Description  Shows all macros
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  object
+// @Router       /all [get]
 func all(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {
@@ -215,13 +215,13 @@ func all(c *gin.Context) {
 }
 
 // search godoc
-// @Summary Search macros
-// @Description Shows all macros by keyword. Searches captions, original_text, and tags
-// @Accept  json
-// @Produce  json
-// @Param keyword path string true "Keyword"
-// @Success 200 {object} object
-// @Router /search/{keyword} [get]
+// @Summary      Search macros
+// @Description  Shows all macros by keyword. Searches captions, original_text, and tags
+// @Accept       json
+// @Produce      json
+// @Param        keyword  path      string  true  "Keyword"
+// @Success      200      {object}  object
+// @Router       /search/{keyword} [get]
 func search(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	keyword := c.Param("keyword")
@@ -244,12 +244,12 @@ func search(c *gin.Context) {
 }
 
 // about godoc
-// @Summary About this site
-// @Description About this site
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} object
-// @Router /about [get]
+// @Summary      About this site
+// @Description  About this site
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  object
+// @Router       /about [get]
 func about(c *gin.Context) {
 	md, _ := c.MustGet("MacroData").(MacroData)
 	switch c.NegotiateFormat(gin.MIMEHTML, gin.MIMEJSON) {

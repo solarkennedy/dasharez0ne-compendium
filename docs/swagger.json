@@ -202,6 +202,15 @@
                 "commentary": {
                     "type": "string"
                 },
+                "dupe_of": {
+                    "type": "integer"
+                },
+                "dupes": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
                 "edit_url": {
                     "type": "string"
                 },
