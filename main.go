@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	canonicalURL = "dasharez0ne-compendium.fly.dev"
+	canonicalURL = "dsz.xkyle.com"
 )
 
 type Macro struct {
@@ -270,6 +270,7 @@ func SetupRouter() *gin.Engine {
 	r.Use(dataMiddleware(md))
 	r.LoadHTMLGlob("resources/templates/*")
 	r.Static("/assets", "resources/assets")
+	setupFavicons(r)
 
 	r.GET("/", index)
 	r.GET("/about", about)
@@ -291,6 +292,19 @@ func SetupRouter() *gin.Engine {
 	docs.SwaggerInfo.Schemes = []string{"https"}
 
 	return r
+}
+
+func setupFavicons(r *gin.Engine) {
+	r.StaticFile("/android-chrome-192x192.png", "resources/assets/android-chrome-192x192.png")
+	r.StaticFile("/android-chrome-512x512.png", "resources/assets/android-chrome-512x512.png")
+	r.StaticFile("/apple-touch-icon.png", "resources/assets/apple-touch-icon.png")
+	r.StaticFile("/browserconfig.xml", "resources/assets/browserconfig.xml")
+	r.StaticFile("/favicon-16x16.png", "resources/assets/favicon-16x16.png")
+	r.StaticFile("/favicon-32x32.png", "resources/assets/favicon-32x32.png")
+	r.StaticFile("/favicon.ico", "resources/assets/favicon.ico")
+	r.StaticFile("/mstile-150x150.png", "resources/assets/mstile-150x150.png")
+	r.StaticFile("/safari-pinned-tab.svg", "resources/assets/safari-pinned-tab.svg")
+	r.StaticFile("/site.webmanifest", "resources/assets/site.webmanifest")
 }
 
 func main() {

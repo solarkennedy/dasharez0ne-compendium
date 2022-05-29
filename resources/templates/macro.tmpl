@@ -1,5 +1,6 @@
 <html>
 <head>
+{{template "head.tmpl" .}}
 <title>dasharez0ne Compendium - Macro {{ .id }} - {{.macro.Caption}}</title>
 <meta property="og:type" content="website">
 <meta property="og:title" content="dasharez0ne Compendium - Macro {{ .id }} - ">
@@ -24,7 +25,7 @@
   <li>Dupes: [{{range .macro.Dupes}}<a href="/macro/{{.}}">{{.}}</a>  {{end}}]</li>
   {{ end }}
   <li>Edit URL: <a href="{{.macro.EditURL}}">Edit Me!</a></li>
-  <li>Permalink: <a href="macro/{{ .macro.Id}}">Link</a></li>
+  <li>Permalink: <a href="/macro/{{ .macro.Id}}">Link</a></li>
 </ul>
 {{template "footer.tmpl" .}}
 </body>
